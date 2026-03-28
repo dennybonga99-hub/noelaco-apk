@@ -1,81 +1,229 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-MZ">
 <head>
   <meta charset="UTF-8">
-  <title>Download Nó&Laço</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Baixe nosso app e aproveite a experiência premium.">
+  <meta name="author" content="Denny Bonga">
+  <title>Download Nó&amp;Laço</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    body {
-      font-family: Arial;
+    /* Reset básico e estilos globais */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg,#fdfbfb,#ebedee); color: #1F2937; }
+    a { text-decoration: none; transition: all 0.3s ease; }
+    a:hover { opacity: 0.85; }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 2rem;
+      background: linear-gradient(120deg, #667eea, #764ba2);
+      color: white;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 0.5rem;
+      background: #ff6363;
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 4rem 2rem;
+      background: #f8f9fa;
+    }
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+    }
+    .feature-card h3 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #4F46E5;
+    }
+    .feature-card p {
+      font-size: 1rem;
+      color: #6B7280;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #1F2937;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: #0f172a;
-      color: white;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
     }
-
-    button {
-      padding: 15px 25px;
-      border: none;
-      border-radius: 10px;
-      background: #22c55e;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
     }
-
     .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
       background: white;
-      color: black;
-      padding: 20px;
-      border-radius: 12px;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
       text-align: center;
-      width: 300px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+    .modal h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1F2937;
+    }
+    .modal p {
+      margin-bottom: 1.5rem;
+      color: #4B5563;
+    }
+    .modal .modal-btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+    }
+    .modal .download-btn {
+      background: #ff6363;
+      color: white;
+    }
+    .modal .download-btn:hover {
+      opacity: 0.85;
+    }
+    .modal .cancel-btn {
+      background: #E5E7EB;
+      color: #374151;
+    }
+    .modal .cancel-btn:hover {
+      background: #d1d5db;
     }
 
-    .actions button {
-      margin: 10px;
-    }
   </style>
 </head>
 <body>
 
-<button onclick="openModal()">Baixar App</button>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Seu mundo, agora mais inteligente</h1>
+    <p>Tudo em um app. Rápido, seguro e moderno.</p>
+    <button class="btn" id="openModalBtn">Baixar APK</button>
+  </section>
 
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <h3>Download</h3>
-    <p>Você está prestes a baixar o aplicativo Nó&Laço. Deseja continuar? <b>Nó&Laço</b>.</p>
-    <div class="actions">
-      <button onclick="download()">Baixar</button>
-      <button onclick="closeModal()">Cancelar</button>
+  <!-- Features Section -->
+  <section class="features">
+    <div class="feature-card">
+      <h3>Interface Intuitiva</h3>
+      <p>Navegação simples e elegante, perfeita para todos os tipos de usuário.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Alta Performance</h3>
+      <p>Carregamento rápido e respostas imediatas em todas as ações.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Segurança Total</h3>
+      <p>Proteção avançada de dados e privacidade garantida para você.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Atualizações</h3>
+      <p>Novos recursos e melhorias regulares sem complicações.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Denny Bonga. Todos os direitos reservados.
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <h2>Confirmar Download</h2>
+      <p>Deseja baixar o app Nó&amp;Laço?</p>
+      <button class="modal-btn download-btn" onclick="location.href='https://github.com/dennybonga99-hub/noelaco-apk/releases/download/v1.0/app-noelaco.apk'">Baixar</button>
+      <button class="modal-btn cancel-btn" id="cancelBtn">Cancelar</button>
     </div>
   </div>
-</div>
 
-<script>
-  function openModal() {
-    document.getElementById("modal").style.display = "flex";
-  }
+  <script>
+    const openModalBtn = document.getElementById('openModalBtn');
+    const modal = document.getElementById('modal');
+    const cancelBtn = document.getElementById('cancelBtn');
 
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-  }
+    openModalBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+    });
 
-  function download() {
-    window.location.href = "https://github.com/dennybonga99-hub/noelaco-apk/releases/download/v1.0/app-noelaco.apk";
-  }
-</script>
+    cancelBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+  </script>
 
 </body>
 </html>
